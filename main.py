@@ -244,7 +244,7 @@ def index():
     return database
 
 
-@app.get("/:id")
+@app.get("/{id}")
 def get_one(id: int):
     result = list(filter(lambda item: item["id"] == id, database))
 
