@@ -1,9 +1,10 @@
-from ctypes import resize
 import uvicorn
 
+# conclusion the data on heroku doesn't affect github
 from fastapi import FastAPI
 from pydantic import BaseModel
 from tinydb import TinyDB, where
+from pathlib import Path
 
 app = FastAPI()
 
@@ -15,7 +16,7 @@ class Person(BaseModel):
 
 @app.get("/")
 def index():
-    database = TinyDB("./db.json")
+    database = TinyDB("src/data/db.json")
     result = [dict(doc) for doc in database.all()]
     database.close()
 
@@ -24,14 +25,14 @@ def index():
 
 @app.get("/{id}")
 def get_one(id: int):
-    database = TinyDB("./db.json")
+    database = TinyDB("src/data/db.json")
 
     return [dict(doc) for doc in database.search(where("id") == id)]
 
 
 @app.post("/persons")
 def create_person(person: Person):
-    database = TinyDB("./db.json")
+    database = TinyDB("src/data/db.json")
     database.insert(person.dict())
     # database.append(person)
     return person
@@ -276,4 +277,3 @@ def insert():
 
 if __name__ == "__main__":
     uvicorn.run(app, debug=True)
-    # insert()
