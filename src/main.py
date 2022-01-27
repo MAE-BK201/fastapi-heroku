@@ -1,10 +1,15 @@
+from typing import Optional
 import uvicorn
+import click
 
 # conclusion the data on heroku doesn't affect github
 from fastapi import FastAPI
 from pydantic import BaseModel
 from tinydb import TinyDB, where
 from pathlib import Path
+
+
+from requests_mod import update_db
 
 app = FastAPI()
 
@@ -114,6 +119,14 @@ def insert():
     db.close()
 
 
+@click.command()
+@click.option("--request", "-r", is_flag=True, required=False)
+def cli(request: Optional[bool]):
+    if request:
+        update_db()
+    else:
+        uvicorn.run(app, debug=True, host="0.0.0.0", port=3240)
+
+
 if __name__ == "__main__":
-    # uvicorn.run(app, debug=True, host="0.0.0.0", port=3240)
-    insert()
+    cli()

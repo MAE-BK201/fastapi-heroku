@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 def update_db():
+
     db_path = Path("src/data/db.json").resolve()
     conn = TinyDB(db_path)
 
