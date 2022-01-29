@@ -12,26 +12,12 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - uses: actions/setup-python@v2.3.1
-        with:
-          python-version: 3.8
-      - name: "Install Dependencies"
-        run: pip install -r requirements.txt
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: python src/main.py -r
-
-      - name: "Commit Changes"
-      - uses: EndBug/add-and-commit@v8
-        with:
-          add: "src/data"
-          author_name: "Aundre Bryan"
-          message: "Update db"
+      - name: Run a command
+        run: echo Hello, World
