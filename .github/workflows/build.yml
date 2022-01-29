@@ -23,4 +23,6 @@ jobs:
           python-version: 3.8
       
       - name: Run a command
-        run: python3 test.py
+        run: |
+          pip3 install -r requirements.txt
+          python3 test.py
